@@ -50,7 +50,7 @@ r.each_line do |line|
 end
 
 html = "
-<!DOCTYPE html  PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">
+<!DOCTYPE html PUBLIC \"XHTML 1.1\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">
 <html>
     <head>
         <title>Ctrl-C.club nethack scores</title>
@@ -62,10 +62,10 @@ html = "
         <h1>Ctrl-C.club nethack scores</h1>
 
         <p>Some of our users are discovering nethack!  Here are their stories:</p>
-	<ul>
+	<ol>
 	#{lines.join}
-	</ul>
-	<p class=\"footer\">Last updated #{`date`}<p>
+	</ol>
+	<p class=\"footer\">Last updated #{`date`}</p>
     </body>
 </html>
 "
