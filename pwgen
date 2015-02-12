@@ -1,0 +1,18 @@
+#!/bin/bash
+
+for i in {1..10}
+do
+
+    FOO=""
+
+    for j in {1..4}
+    do
+      FOO+=`grep -v "\W" /usr/share/dict/words | grep "\w\{4,\}" |  shuf | head -n 1 | tr '[:upper:]' '[:lower:]'`
+      if [ $j != 4 ]
+      then
+        FOO+=" "
+      fi
+    done
+
+    echo $FOO
+done
