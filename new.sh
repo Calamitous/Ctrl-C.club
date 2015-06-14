@@ -1,6 +1,6 @@
 #!/bin/bash
 pwgen
-adduser $1 &&
+adduser --force-badname $1 &&
 	mkdir /home/$1/public_html &&
 	mkdir /home/$1/.ssh &&
 	touch /home/$1/.ssh/authorized_keys &&
