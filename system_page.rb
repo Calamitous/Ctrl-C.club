@@ -2,6 +2,7 @@
 
 users = `ls /home`.split.reject{|x|x == 'admin'}
 
+`~/bin/who_to_json.rb`
 lines = users.map do |user|
   if (`ls /home/#{user}/public_html/`.size == 0)
     %Q{<li>~#{user}</li>}

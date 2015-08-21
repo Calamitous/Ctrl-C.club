@@ -8,3 +8,4 @@ adduser --force-badname $1 &&
 	make_mail.sh $1
 
 who_to_html.rb
+who_to_json.rb
