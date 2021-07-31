@@ -1,0 +1,1 @@
+cp /root/gemini_root_index.gmi /var/gemini/index.gmi && ls /var/gemini/users/**/index.gmi | sed 's/\/var\/gemini\/users\//=> gemini:\/\/gemini.ctrl-c.club\/~/' | sed 's/\/index.gmi//' >> /var/gemini/index.gmi

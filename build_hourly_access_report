@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+goaccess /var/log/nginx/access.log /var/log/nginx/access.log.1 -o /root/site/usage.html --log-format=COMBINED

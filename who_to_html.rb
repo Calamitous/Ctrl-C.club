@@ -32,14 +32,14 @@ html = %Q{
 </html>
 }
 
-puts html
+# puts html
 
-sed = %Q{sed -i "s/Population: [0-9]\\+/Population: #{lines.size}/" /root/root_html/index.html}
-puts sed
+sed = %Q{sed -i "s/Population: [0-9]\\+/Population: #{lines.size}/" /root/site/index.html}
+# puts sed
 system sed
 
 puts
-puts "#{lines.size} users"
+puts "#{lines.size} users written to HTML"
 puts
 
-File.open('/root/root_html/who.html', 'w') { |file| file.write(html) }
+File.open('/root/site/who.html', 'w') { |file| file.write(html) }

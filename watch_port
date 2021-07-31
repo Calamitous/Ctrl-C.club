@@ -1,0 +1,1 @@
+tcpdump -vv -x -X -s 1500 -i eth1 'port $1'

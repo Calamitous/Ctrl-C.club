@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+cd ~/logtmp &&
+	rm access.* &&
+	cp /var/log/nginx/access.* . &&
+	gunzip access.*.gz &&
+	goaccess ./access.log* -o /root/site/full_usage.html --log-format=COMBINED

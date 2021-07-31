@@ -11,12 +11,17 @@ lines = users.map do |user|
   end
 end
 
-asof = `date`
-dfree = `df -h`.split("\n").map{|x| "<li>#{x.gsub(/\s/, '&nbsp;')}</li>"}.join
-usage = `du --summarize /home/* | sort -nr`.split("\n").map{|x| "<li>#{x}</li>"}.join
-activity = `last | grep -v oot | grep -v calam | grep -v admin | head -n 20`.split("\n").map{|x| "<li>#{x.gsub(/\s/, '&nbsp;')}</li>"}.join
-last24h = `find /home -name public_html -mtime 0`.split("\n").map{|x| "<li>#{x}</li>"}.join
-last24h = '<strong>None</strong>' if last24h.length < 1
+def htmlize_lines(result)
+  result.split("\n").map{|x| "<li>#{x.gsub(/\s/, '&nbsp;')}</li>"}.join
+end
+
+asof       = `date`
+dfree      = htmlize_lines(`df -h`)
+usage      = htmlize_lines(`du --summarize /home/* | sort -nr`).gsub(/dsc/, "dsc <em>- OK TO GO OVER</em>").gsub(/nomius/, "nomius <em>- OK TO GO OVER</em>")
+activity   = htmlize_lines(`last | grep -v oot | grep -v calam | grep -v admin | head -n 20`)
+last24h    = htmlize_lines(`find /home -name public_html -mtime 0`)
+last24h    = '<strong>None</strong>' if last24h.length < 1
+# banned_ips = htmlize_lines(`cat /etc/fail2ban/ip.blacklist`)
 
 html = %Q{
 <!DOCTYPE html PUBLIC "XHTML 1.1" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -33,7 +38,7 @@ html = %Q{
         <h1>Uptime</h1>
 	<p>#{`uptime`}</p>
 
-        <h1>Sites Updated in the Last 24 Hours</h1>
+        <h1>Sites Updated or Created in the Last 24 Hours</h1>
 	<ol>#{last24h}</ol>
 
         <h1>Disk Free</h1>
@@ -44,9 +49,12 @@ html = %Q{
 
         <h1>Recent Activity</h1>
 	<ol>#{activity}</ol>
+
+        <h1>Banned IPs</h1>
+	<ol>See: /etc/fail2ban/ip.blacklist</ol>
     </body>
 </html>
 }
 
 puts html
-File.open('/root/root_html/system.html', 'w') { |file| file.write(html) }
+File.open('/root/site/system.html', 'w') { |file| file.write(html) }

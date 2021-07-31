@@ -10,9 +10,10 @@ lines = users.map do |user|
 
   if FileTest.exists?(index)
     File.open(index, 'r') { |f| title = Nokogiri::HTML(f).css('html head title').text }
-    title = title.gsub(/\n/, '')
-    mtime = File.mtime(index)
-    %Q{{"username": "#{user}", "title": "#{title}", "mtime": "#{mtime}"}}
+    title = title.gsub(/\n/, '').gsub(/	/, ' ').gsub(/"/, "'")
+    mtime = File.mtime(index).strftime('%s').to_i
+    humanized_time = File.mtime(index)
+    %Q{{"username": "#{user}", "title": "#{title}", "mtime": #{mtime}, "humanized_time": "#{humanized_time}"}}
   else
     %Q{{"username": "#{user}", "title": null, "mtime": null}}
   end
@@ -32,6 +33,9 @@ json = %Q{
 }
 }
 
-puts json
+puts
+puts "#{lines.size} users written to JSON"
+puts
 
-File.open('/root/root_html/tilde.json', 'w') { |file| file.write(json) }
+
+File.open('/root/site/tilde.json', 'w') { |file| file.write(json) }
